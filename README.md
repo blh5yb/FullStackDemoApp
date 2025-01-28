@@ -3,7 +3,7 @@ This is an interactive demo application using 3 dockerized microservices which a
 [Try it out here](https://barryhykesdemo.web.app)
 
 This is a simple application which I made to show case a few of my skills and abilities. The contact page
-end point is public. Once you are authenticated, you can do variants crud from the private variants page which 
+endpoint is public. Once you are authenticated, you can do variants crud from the private variants page which 
 connects to private variants api endpoints. You can either regiser/ login with your own username and password or
 use my demo user credentials below.
 
