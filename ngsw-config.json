@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "FullStackDemo",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "assets/icon/favicon.png",
+          "/index.html",
+          "/manifest.json",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    }
+  ]
+}

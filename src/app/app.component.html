@@ -1,0 +1,23 @@
+<ion-app>
+  <ion-router-outlet id="main-content" [animated]="false">
+  </ion-router-outlet>
+  <ion-menu side="start" contentId="main-content" type="overlay" swipe-gesture="false">
+    <ion-content>
+      <ion-list id="inbox-list">
+        <ion-list-header>Menu</ion-list-header>
+        <ion-menu-toggle auto-hide="true">
+          <div *ngFor="let p of appPages; let i = index">
+            <ion-item (click)="navigate(p.url)" *ngIf="!(curr_page && curr_page.includes(p.url))" style="--background: clear; cursor: pointer;"lines="none" detail="false">
+              <ion-label color="dark">{{ p.title }}</ion-label>
+              <ion-icon slot="end" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            </ion-item>
+            <ion-item *ngIf="curr_page && curr_page.includes(p.url)" style="--background: var(--ion-color-primary); cursor: pointer; opacity: .9;" lines="none" detail="false">
+              <ion-label color="dark">{{ p.title }}</ion-label>
+              <ion-icon slot="end" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            </ion-item>
+          </div>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+</ion-app>

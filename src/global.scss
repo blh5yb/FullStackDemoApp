@@ -1,0 +1,188 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-card {
+    box-shadow: 0 3px 5px -1px rgba(var(--ion-color-light-contrast-rgb),.2), 0 6px 10px 0 rgba(var(--ion-color-light-contrast-rgb),.14), 0 1px 18px 0 rgba(var(--ion-color-light-contrast-rgb),.12) !important;
+}
+.error-message {
+    color: #FF1616;
+}
+
+
+ion-item{
+    --background: clear;
+    --border-color: var(--ion-color-dark-shade);
+    background-color: transparent;
+}
+ion-item-divider{
+    --background: clear;
+}
+
+.md-button-text{
+  font-size: calc(.8vw + .6vh);
+  word-break: normal;
+  white-space: normal;
+  padding: 0;
+}
+
+.sm-button-text{
+  font-size: calc(1vw + .6vh);
+  word-break: normal;
+  white-space: normal;
+  padding: 0;
+}
+
+.xs-button-text{
+  font-size: calc(1vw + .6vh);
+  //word-break: normal;
+  //white-space: normal;
+  padding: 0;
+  -webkit-line-clamp: 1;
+  line-clamp: 1; 
+  //border: 12px solid var(--ion-color-medium);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+.text-header-xxs {
+  font-size: calc(.8vw + .6vh + 2px);
+  //font-size: calc(1vw + .8vh + 6px);
+  font-weight: bold;
+}  
+.text-header-xs {
+  font-size: calc(.6vw + .7vh + 4px);
+  font-weight: bold;
+}
+.text-header-sm {
+  font-size: calc(.8vw + 1vh + 4px);
+  font-weight: bold;
+}
+.text-header-md {
+  font-size: calc(1.75vw + 1vh + 4px);
+  font-weight: bold;
+}
+
+.text-header-lg {
+  font-size: calc(1.75vw + 1.5vh + 2px);
+  font-weight: bold;
+}
+.text-header-xl {
+  font-size: calc(1vw + 2vh + 2px);
+  font-weight: bold;
+}
+
+.text-size-xs{
+    font-size: calc(1vh + 4px);
+}
+.text-size-xxs{
+    font-size: calc(1vw + .8vh + 2px);
+}
+
+.text-size-sm{
+    font-size: calc(1.2vh + 4px);
+}
+
+.text-size-lg{
+    font-size: calc(1.2vh + 6px);
+}
+.text-card-header-sm {
+    font-size: calc(1.75vw + .5vh + 2px);
+}
+
+.text-cutoff {
+    -webkit-line-clamp: 1;
+    line-clamp: 1; 
+    //border: 12px solid var(--ion-color-medium);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .modal-fullscreen {
+    --width:100% !important;
+    --height:100% !important;
+  }
+
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    width: 100%; 
+    .card {
+      flex: 0 0 auto;
+    }
+  }
+
+  .overflow-scrolling {
+    -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    width: 100%; 
+    .card {
+      flex: 0 0 auto;
+    }
+  }
+
+  .overflow-scrolling {
+    -webkit-overflow-scrolling: touch;
+}
+
+.message-input {
+  width: 100%;
+  border: 1px solid var(--ion-color-dark);
+  border-radius: 25px;
+  resize: none;
+  padding-left: 0px;
+  padding-right: 0px;
+}

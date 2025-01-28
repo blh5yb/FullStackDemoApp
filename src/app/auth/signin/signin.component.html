@@ -1,0 +1,41 @@
+<ion-row *ngIf="!isLoading">
+  <ion-col>
+    <form [formGroup]="loginForm">
+      <ion-item lines="full">
+        <ion-label position="floating">Email Address</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+        <div *ngIf="email?.errors?.required">Email address is required</div>
+        <div *ngIf="email?.errors?.email">Enter a valid email address</div>
+      </div>
+      <ion-item lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input [type]="fieldTextType ? 'text' : 'password'" formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="error-message">
+        <div *ngIf="password?.errors?.required">Password is required</div>
+      </div><br>
+      <ion-row>
+        <ion-col class="ion-text-left" size="6">
+          <input style="color: var(--ion-color-dark)" type="checkbox" class="form-check-input" id="check" formControlName='savePassword'>
+          <ion-label style="color: var(--ion-color-dark)">&nbsp;Save Login</ion-label>
+        </ion-col>
+        <ion-col class="ion-text-right" size="6">
+          <input style="color: var(--ion-color-dark)" type="checkbox" class="form-check-input" id="check" formControlName='showPassword'>
+          <ion-label style="color: var(--ion-color-dark)">&nbsp;Show Password</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-button 
+        color="primary" 
+        expand="block" 
+        class="ion-margin-top"  
+        [disabled]="!loginForm.valid" 
+        (click)="login()"
+      >
+        Log In
+        <!--<ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>-->
+      </ion-button>
+    </form>
+  </ion-col>
+</ion-row>

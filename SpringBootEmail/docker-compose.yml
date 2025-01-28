@@ -1,0 +1,24 @@
+
+
+services:
+  app:
+    image: $IMAGE_NAME
+    platform: linux/amd64
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_APP_ACCES_KEY
+      - AWS_SECRET_ACCESS_KEY=$AWS_APP_SECRET_KEY
+      - AWS_DEFAULT_REGION=$AWS_APP_REGION
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_MAIL_USERNAME=$SPRING_MAIL_USERNAME
+      - SPRING_MAIL_PASSWORD=$SPRING_MAIL_PASSWORD
+      - SPRING_MAIL_HOST=$SPRING_MAIL_HOST
+      - SPRING_WEB_CORS_ALLOWED_HEADERS=$SPRING_WEB_CORS_ALLOWED_HEADERS
+      - SPRING_WEB_CORS_ALLOW_CREDENTIALS=$SPRING_WEB_CORS_ALLOW_CREDENTIALS
+      - APP_ALLOWED_HOSTS=$APP_ALLOWED_HOSTS
+    restart: on-failure

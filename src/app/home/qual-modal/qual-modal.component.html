@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" fill="clear" color="warning">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Filter Quality</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!updated" (click)="done()" fill="clear" color="success">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row style="margin-top: 50px;">
+      <ion-col>
+        <ion-item lines="full">
+          <span>{{qual.min}}&nbsp;</span>
+          <ion-range aria-label="Qual Range" [(ngModel)]="qualRange" (ionChange)="updateRange($event)" [dualKnobs]="true" [min]="'0'" [max]="'100'"[pin]="true"[pinFormatter]="pinFormatter" [ticks]="false" [snaps]="true"></ion-range> 
+          <span>&nbsp;{{qual.max}}</span>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

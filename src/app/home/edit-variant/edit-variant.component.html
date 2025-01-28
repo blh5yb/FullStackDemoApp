@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons  slot="start">
+      <ion-button [disabled]="isLoading || showSpinner" color="danger" (click)="back()">
+        <ion-icon *ngIf="!isLoading" name="chevron-back-outline"></ion-icon> <span *ngIf="!isLoading">Cancel</span>
+        <ion-spinner *ngIf="isLoading" name="lines"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+    <!--<ion-title class="ion-text-center">Complete Profile</ion-title>-->
+    <ion-buttons slot="end">
+      <ion-button color="dark" [disabled]="isLoading || showSpinner || !editVariantForm.valid || !updated" (click)="save()">
+        <span *ngIf="!(isLoading || showSpinner)">Save</span> <ion-icon *ngIf="!isLoading" name="chevron-forward-outline"></ion-icon>
+        <ion-spinner *ngIf="isLoading || showSpinner" name="lines"></ion-spinner>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!isLoading">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="editVariantForm">
+          <ion-row>
+            <ion-col size-md="6" size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-select formControlName="variant_type" label="Variant Type" interface="popover" (placeholder)="'Select'" [multiple]="false">
+                  <ion-select-option *ngFor="let type of variant_types" [value]="type">{{type}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size-md="6" size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-select formControlName="chr" label="Chromosome" interface="popover" (placeholder)="'Select'" [multiple]="false">
+                  <ion-select-option *ngFor="let chr of chromosomes" [value]="chr.title">{{chr.title}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="6" size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-input type="string"
+                  label="Ref Allele" labelPlacement="start" class="ion-text-right"
+                  formControlName="ref"
+                ></ion-input>
+              </ion-item>
+              <div style="padding-left: 10px; float: left;" *ngIf="ref?.invalid && (ref?.dirty || ref?.touched)" class="error-message">
+                <div *ngIf="ref?.errors.required">Ref allele is required</div>
+              </div>
+            </ion-col>
+            <ion-col size-md="6" size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-input type="string"
+                  label="Alt Allele" labelPlacement="start" class="ion-text-right"
+                  formControlName="alt"
+                ></ion-input>
+              </ion-item>
+              <div style="padding-left: 10px; float: left;" *ngIf="alt?.invalid && (alt?.dirty || alt?.touched)" class="error-message">
+                <div *ngIf="alt?.errors.required">Alt allele is required</div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-md="6" size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-input type="number" 
+                  label="Position" labelPlacement="start" class="ion-text-right"
+                  formControlName="pos"
+                ></ion-input>
+              </ion-item>
+              <div style="padding-left: 10px; float: left;" *ngIf="pos?.invalid && (pos?.dirty || pos?.touched)" class="error-message">
+                <div *ngIf="pos?.errors.required">Username is required</div>
+              </div>
+            </ion-col>
+            <ion-col size-md="6" size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-input type="string"
+                  label="Quality" labelPlacement="start" class="ion-text-right"
+                  formControlName="quality"
+                ></ion-input>
+              </ion-item>
+              <div style="padding-left: 10px; float: left;" *ngIf="quality?.invalid && (quality?.dirty || quality?.touched)" class="error-message">
+                <div *ngIf="quality?.errors.required">Variant Quality is required</div>
+                <div *ngIf="quality?.errors?.min">Quality must be greater than 0</div>
+                <div *ngIf="quality?.errors?.max">Quality must be less than 100.00</div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <!--<ion-button expand="block" color="success">Submit</ion-button>-->
+        </form>
+        <ion-button style="margin-top: 15px;"
+          (click)="deleteVariant()" color="danger" 
+          expand="block" fill="outline" *ngIf="mode === 'edit' && varId"
+        >Delete</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

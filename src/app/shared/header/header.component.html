@@ -1,0 +1,42 @@
+<ion-header *ngIf="is_mobile && curr_page">
+  <ion-toolbar mode="md">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col class="ion-text-left" size="2">
+        <ion-menu-button></ion-menu-button>
+      </ion-col>
+      <ion-col size="8">
+        <ion-title class="ion-text-center">
+          {{getHeader()}}
+        </ion-title>
+      </ion-col>
+      <ion-col class="ion-text-center" size="2">
+        <img src="assets/icon/logo-144x144.png" style="height: 25px;">
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-header *ngIf="!is_mobile">
+  <ion-toolbar mode="md">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col class="ion-text-left" style="padding-left: 15px;" size-md="4" size-sm="4">
+        <ion-label style="padding-right: 1.5vw; cursor: pointer; color: var(--ion-color-medium); font-family: sans-serif" *ngFor="let tab of appPages" (click)="goToLink(tab.url)">
+          <span  *ngIf="curr_page.includes(tab.url)" style="border-bottom: 3px solid var(--ion-color-medium); cursor: pointer; font-size: calc(6px + .8vw); font-weight: bold;">&nbsp;{{tab.title}}&nbsp;</span>
+          <span  *ngIf="!curr_page.includes(tab.url)" style="cursor: pointer; font-size:  calc(6px + .8vw); font-weight: 250;" >&nbsp;{{tab.title}}&nbsp;</span>
+        </ion-label>
+      </ion-col>
+      <ion-col *ngIf="!isAuthenticated" style="padding-right: 15px;" size-md="4" size-sm="4"></ion-col>
+      <ion-col *ngIf="!is_small || isAuthenticated" style="padding-right: 15px;" class="ion-text-center"  size-md="4" size-sm="4">
+        <img src="assets/icon/thecoolnerd_green_nobg.png" style="height: 30px;">
+      </ion-col>
+      <ion-col *ngIf="is_small && !isAuthenticated" style="padding-right: 15px;" class="ion-text-right"  size-md="4" size-sm="4">
+        <img src="assets/icon/logo-144x144.png" style="height: 30px;">
+      </ion-col>
+      <ion-col *ngIf="isAuthenticated" style="padding-right: 15px;" class="ion-text-right" size-md="4" size-sm="4">
+        <ion-label style="padding-right: 1.5vw; cursor: pointer; color: var(--ion-color-medium); font-family: sans-serif" *ngFor="let tab of desctuctivePages" (click)="goToLink(tab.url)">
+          <span  *ngIf="curr_page.includes(tab.url)" style="border-bottom: 3px solid var(--ion-color-medium); cursor: pointer; font-size: calc(6px + .8vw); font-weight: bold;">&nbsp;{{tab.title}}&nbsp;</span>
+          <span  *ngIf="!curr_page.includes(tab.url)" style="cursor: pointer; font-size:  calc(6px + .8vw); font-weight: 250;" >&nbsp;{{tab.title}}&nbsp;</span>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>

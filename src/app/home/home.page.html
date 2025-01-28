@@ -1,0 +1,7 @@
+<app-header></app-header>
+
+<ion-content *ngIf="user && !isLoading" [fullscreen]="true">
+  <ion-grid fixed>
+    <app-variants-list [user]="user" [chromosomes]="chromosomes"></app-variants-list>
+  </ion-grid>
+</ion-content>

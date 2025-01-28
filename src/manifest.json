@@ -1,0 +1,70 @@
+{
+    "dir": "ltr",
+    "lang": "en",
+    "name": "FullStackDemo",
+    "scope": "/",
+    "display": "fullscreen",
+    "start_url": "./",
+    "short_name": "DemoApp",
+    "theme_color": "transparent",
+    "description": "Demo Application",
+    "orientation": "any",
+    "background_color": "transparent",
+    "related_applications": [],
+    "gcm_sender_id": "1097790828798",
+    "prefer_related_applications": false,
+    "icons": [
+      {
+        "src": "/assets/icon/favicon.png",
+        "sizes": "16x16 32x32"
+      },
+      {
+        "src": "/assets/icons/icon-72x72.png",
+        "sizes": "72x72",
+        "type": "image/png",
+        "density": "1.5"
+      },
+      {
+        "src": "/assets/icons/icon-96x96.png",
+        "sizes": "96x96",
+        "type": "image/png",
+        "density": "2.0"
+      },
+      {
+        "src": "/assets/icons/icon-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "density": "3.0"
+      },
+      {
+        "src": "/assets/icons/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "density": "4.0"
+      },
+      {
+        "src": "/assets/icons/icon-120x120.png",
+        "sizes": "120x120",
+        "type": "image/png",
+        "density": "3.0"
+      },
+      {
+        "src": "/assets/icons/icon-152x152.png",
+        "sizes": "152x152",
+        "type": "image/png",
+        "density": "3.0"
+      },
+      {
+        "src": "/assets/icons/icon-167x167.png",
+        "sizes": "167x167",
+        "type": "image/png",
+        "density": "3.5"
+      },
+      {
+        "src": "/assets/icons/icon-180x180.png",
+        "sizes": "180x180",
+        "type": "image/png",
+        "density": "4.0"
+      }
+    ]
+  }

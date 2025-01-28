@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<ion-content [fullscreen]="true" *ngIf="!isLoading">
+  <ion-grid fixed>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size-sm="10" size-md="8" size-xs="12">
+        <ion-card style="margin-top: 20px; border-radius: 10px; padding-left: 15px; padding-right: 15px;">
+          <ion-row style="margin-top: 25px;">
+            <ion-col *ngFor="let page of pages" style="padding-left: 7px; padding-right: 7px;" size="6" class="ion-text-center">
+              <div 
+                *ngIf="curr_page === page.url" class="ion-text-center" 
+                style="border-bottom: 3px solid var(--ion-color-dark); cursor: pointer;"
+                >
+                <ion-text style="font-weight: bold;" color="dark">{{page.title}}</ion-text>
+              </div>
+              <div (click)="switchPage(page.url)" 
+                *ngIf="curr_page !== page.url" class="ion-text-center" style="cursor: pointer;"
+              >
+                <ion-text style="font-weight: bold;" color="dark">{{page.title}}</ion-text>
+              </div>
+            </ion-col>
+          </ion-row>
+          <router-outlet
+            (activate)="componentAdded($event)"
+          ></router-outlet>
+          <ion-row>
+            <ion-col>
+              
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

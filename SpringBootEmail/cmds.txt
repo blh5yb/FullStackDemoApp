@@ -1,0 +1,8 @@
+aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+docker-compose up
+docker-compose pull app
+docker-compose up
+docker-compose build app
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/fastapi-microservices:${IMAGE_VERSION}
+sam deploy --template-file template.yaml --stack-name my-spring-boot-lambda --capabilities CAPABILITY_IAM
+

@@ -1,0 +1,88 @@
+<app-header></app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row style="padding-top: 20px;" class="ion-align-items-center ion-justify-content-center">
+      <ion-col class="ion-text-center" size-sm="8" size-md="6" size-xs="10">
+        <!--<ion-card-title>
+          I To Hear From YOU!
+        </ion-card-title>-->
+        <ion-text>
+          Reach out to me with any comments, questions, concerns, inquiries, etc.
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-bottom: 20px;" class="ion-align-items-center ion-justify-content-center">
+      <ion-col *ngIf="contactForm" class="ion-text-center" size-sm="10" size-md="10" size-xs="12">
+        <form [formGroup]="contactForm" autocomplete="off" (ngSubmit)="sendEmail()">
+          <ion-card style="padding: 30px; border-radius: 15px; margin-bottom: 10px;">
+            <ion-row>
+              <ion-col>
+                <ion-item style="--background: clear; padding: 10px; margin-top: -25px;" lines="full">
+                  <ion-label style="font-weight: bold;" position="stacked">Full Name</ion-label>
+                  <ion-input (keydown.enter)="prevent($event)" type="text" formControlName="name"></ion-input>
+                </ion-item>
+                <div style="padding-left: 10px; float: left;" *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="error-message">Name is required</div>
+              </ion-col>
+            </ion-row>
+            <ion-row >
+              <ion-col>
+                <ion-item style="--background: clear; padding: 10px; margin-top: -25px;" lines="full">
+                  <ion-label style="font-weight: bold;" position="stacked">Email Address</ion-label>
+                  <ion-input  (keydown.enter)="prevent($event)" type="email" formControlName="email"></ion-input>
+                </ion-item>
+                <div style="padding-left: 10px; float: left;" *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error-message">
+                  <div *ngIf="email?.errors?.required">email address is required</div>
+                  <div *ngIf="email?.errors?.email">email address is invalid</div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item style="--background: clear; padding: 10px; margin-top: -25px;" lines="full">
+                  <ion-label style="font-weight: bold;" position="stacked">Phone # (with area code)</ion-label>
+                  <ion-input [value]="contact_phone" [(ngModel)]="contact_phone" (keydown.enter)="prevent($event)" type="phone" formControlName="phone"></ion-input>
+                </ion-item>
+                <div style="padding-left: 10px; float: left;" *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)" class="error-message">
+                  <div *ngIf="phone?.errors?.minlength">area code is required with phone number</div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: 10px;">
+              <ion-col>
+                <ion-label>Email Summary</ion-label>
+                <ion-item style="--background: clear;" lines="none">
+                  <ion-textarea
+                    style="padding-left: 10px; padding-right: 10px; padding-top: -30px;"
+                    (placeholder)="'Email Summary'"
+                    formControlName="summary" type="text" [maxlength]="charsLimit"
+                    rows="5"
+                    maxRows="15"
+                    autocomplete="true" autocorrect="false"
+                    wrap="hard"
+                    class="message-input"
+                  ></ion-textarea>
+                </ion-item>
+                <div style="padding-left: 20px; float: left;" class="error-message">
+                  {{charsUsed}} / {{charsLimit}}
+                </div><br>
+                <div style="padding-left: 20px; float: left;" *ngIf="summary?.invalid && (summary?.dirty || summary?.touched)" class="error-message">Message is required</div>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: -25px;">
+              <ion-col>
+                <ion-button expand="block" color="dark" shape="round" class="ion-margin-top" 
+                  (keydown.enter)="prevent($event)" [disabled]="contactForm.invalid || isLoading" (click)="sendEmail()"
+                  style="padding: 10px;"
+                >
+                  Submit
+                  <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </form>
+      </ion-col>
+    </ion-row><br><br>
+  </ion-grid>
+</ion-content>

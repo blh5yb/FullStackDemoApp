@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" fill="clear" color="warning">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Filter Chromosomes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!updated" (click)="done()" fill="clear" color="success">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row style="margin-top: 50px;">
+      <div style="padding: 5px;" *ngFor="let chr of selectedChromosomes; let i = index;">
+        <ion-button (click)="chooseChromosome(i)" color="dark" shape="round" *ngIf="chr.selected">{{chr.title}}</ion-button>
+        <ion-button (click)="chooseChromosome(i)" color="dark" shape="round" *ngIf="!chr.selected" fill="outline">{{chr.title}}</ion-button>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>
