@@ -1,6 +1,14 @@
 <app-header></app-header>
 
-<ion-content *ngIf="user && !isLoading" [fullscreen]="true">
+<ion-content *ngIf="user && !isLoading" appAutoHide [fullscreen]="true" [scrollEvents]="true">
+  <ion-fab #fab id="fab" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button
+      (click)="scrollToTop()"
+      color="light"
+    >  
+      <ion-icon color="tertiary" name="chevron-up-outline"></ion-icon>  
+    </ion-fab-button>  
+  </ion-fab>
   <ion-grid fixed>
     <app-variants-list [user]="user" [chromosomes]="chromosomes"></app-variants-list>
   </ion-grid>

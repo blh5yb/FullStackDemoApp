@@ -32,6 +32,13 @@ export class HelperService {
   navigate(path: string, params: any = {}){
     this.router.navigate([path], {replaceUrl: true, queryParams: params})
   }
+  
+  goToLink(path: string){
+    if (!path.match(/^https?:\/\//i)) {
+      path = 'https://' + path;
+    }
+    window.open(path, "_blank")
+  }
 
   deepCopy(myObj: any){
     return JSON.parse(JSON.stringify(myObj))

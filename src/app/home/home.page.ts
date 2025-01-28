@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { DataStorageService } from '../services/data-storage.service';
 import { environment } from 'src/environments/environment';
@@ -6,6 +6,7 @@ import { WidgetService } from '../services/widget.service';
 import { User } from '../models/user.model';
 import { Variant } from '../models/variants.model';
 import { VariantsService } from '../services/variants.service';
+import { IonContent } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { VariantsService } from '../services/variants.service';
   standalone: false,
 })
 export class HomePage implements OnInit {
+  @ViewChild(IonContent, { static: false }) content: IonContent;
 
   chromosomes: any[] = []
   user: User
@@ -50,6 +52,10 @@ export class HomePage implements OnInit {
 
   test(){
     this.authService.refreshToken()
+  }
+
+  scrollToTop(){
+    this.content.scrollToTop();
   }
 
 }

@@ -4,13 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { AutoHideDirective } from './auto-hide.directive';
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AutoHideDirective,
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { FooterComponent } from './footer/footer.component';
     ReactiveFormsModule,
     IonicModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AutoHideDirective,
   ]
 })
 export class SharedModule { }

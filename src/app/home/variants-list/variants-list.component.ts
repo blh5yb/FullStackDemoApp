@@ -31,7 +31,7 @@ export class VariantsListComponent  implements OnInit, OnDestroy{
   }
 
   isLoading = false;
-  variants: Variant[]
+  variants: Variant[] = []
   filteredVariants: Variant[] = []
   filtersSub: Subscription;
   max_variants = environment.max_variants
