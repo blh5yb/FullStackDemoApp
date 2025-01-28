@@ -7,7 +7,6 @@ import { FooterComponent } from './footer/footer.component';
 import { AutoHideDirective } from './auto-hide.directive';
 
 
-
 @NgModule({
   declarations: [
     HeaderComponent,

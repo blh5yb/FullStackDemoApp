@@ -11,7 +11,7 @@
   </ion-col>
 </ion-row>
 <div *ngIf="variants.length">
-  <ion-row style="padding-left: 5px;" *ngIf="isMobile" class="ion-align-items-center ion-justify-content-center">
+  <ion-row *ngIf="isMobile" style="margin-bottom: -30px; padding-left: 5px;" class="ion-align-items-center ion-justify-content-center">
     <div class="scrolling-wrapper">
       <ion-button *ngFor="let item of filterKeys; let i = index" 
         fill="outline" shape="round" size="small"
@@ -19,7 +19,7 @@
         style="padding: 10px;"
         (click)="chooseFilters(item)"
       >
-        <ion-text class="text-size-xs">{{item}}&nbsp;</ion-text><ion-icon class="icon-align" name="chevron-down"></ion-icon>
+        <ion-text class="text-size-xs">{{item}}&nbsp;</ion-text><ion-icon name="chevron-down"></ion-icon>
       </ion-button>
     </div>
   </ion-row>
