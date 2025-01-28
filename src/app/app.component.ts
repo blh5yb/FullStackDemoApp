@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HelperService } from './services/helper.service';
 import { NavigationStart, Router } from '@angular/router';
-import { catchError, map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from './services/auth.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { SwUpdate } from '@angular/service-worker';
+import { WidgetService } from './services/widget.service';
 
 @Component({
   selector: 'app-root',
@@ -14,55 +14,56 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  appPages: any[] = [
-    {title: 'Contact', url: '/contact', icon: 'mail'},
-    {title: 'SIGN IN', url: ''}
-  ]
+  appPages: any[] = []
   curr_page!: string
   route_sub!: Subscription
+  isAuthenticated = false;
+
+  authenicatedPages = [
+    {title: 'Variants', url: '/home', icon: 'home'},
+    {title: 'Contact', url: '/contact', icon: 'mail'},
+    {title: 'Logout', url: '/logout', icon: 'log-out'},
+    {title: 'Delete Account', url: '/delete', icon: 'trash', color: 'var(--ion-color-danger'}
+  ]
+
+  publicPages = [
+    {title: 'Auth', url: '/auth', icon: 'log-in'},
+    {title: 'Contact', url: '/contact', icon: 'mail'}
+  ]
 
   constructor(
     private helperService: HelperService,
     private router: Router,
     private authService: AuthService,
-    private http: HttpClient,
-  ) {}
+    private swUpdate: SwUpdate,
+    private widgetService: WidgetService
+  ) {
+    this.initializeApp()
+  }
 
   ngOnDestroy(): void {
       
-  }
-
-  async testHttpReq(){
-    //return this.http.get(`http://localhost:3001`, {observe: 'response', withCredentials: true})
-    //.pipe(
-    //  map(res => {
-    //    let headers = res.headers
-    //    const customHeader = headers.get('Authorization')
-    //    console.log(customHeader)
-    //  }, catchError(this.handleError))
-    //)
-    const headers = new HttpHeaders({
-      'Access-Control-Expose-Headers':'Authorization'
-    })
-    return this.http.get<any>(
-      `http://localhost:3001`, {headers, observe: 'response', withCredentials: true}
-    ).subscribe((res: any) => {
-      const customHeader = res.headers.get('Authorization')
-      return res
-    }, error => {
-      return error.message
-    })
   }
 
   handleError(error: any){
     return error.message
   }
 
-  async ngOnInit(){
-    // testing
-    //await this.testHttpReq()
-    //
-    await this.authService.autoLogin();
+  async initializeApp(){
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.subscribe(async(event) => {
+        console.log('update', event)
+        if (event.type === "VERSION_READY") {
+          const header = "New version available. Load New Version?"
+          let action: any = await this.widgetService.confirmAction(header, 'Update', 'refresh', null);
+          if (action === 'Complete'){
+            window.location.reload();
+          } else {
+            return
+          }
+        }
+      });
+    }
     setTimeout(() => {
       this.curr_page = this.router.url
     },500)
@@ -71,21 +72,22 @@ export class AppComponent implements OnInit, OnDestroy {
         this.curr_page = res.url.split('?')[0]
       }
     })
+    this.isAuthenticated = await this.authService.autoLogin();
+    this.appPages = this.isAuthenticated ? this.authenicatedPages : this.publicPages;
     this.authService.loggedIn.subscribe((loggedIn: boolean) => {
       if (loggedIn){
-        this.appPages = [
-          {title: 'Variants', url: '/home', icon: 'home'},
-          {title: 'Contact', url: '/contact', icon: 'mail'},
-          {title: 'Logout', url: '/logout', icon: 'log-out'},
-          {title: 'Delete Account', url: '/delete', icon: 'trash', color: 'var(--ion-color-danger'}
-        ]
+        this.appPages = this.authenicatedPages
       } else {
-        this.appPages = [
-          {title: 'Auth', url: '/auth', icon: 'log-in'},
-          {title: 'Contact', url: '/contact', icon: 'mail'}
-        ]
+        this.appPages = this.publicPages
       }
+      this.isAuthenticated = loggedIn
     })
+  }
+
+  ngOnInit(){
+    // testing
+    //await this.testHttpReq()
+    //
   }
 
   async navigate(path: string){

@@ -26,11 +26,10 @@ export class AuthPage implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.curr_page = this.router.url
     if (this.router.url === '/auth'){
       this.helperService.navigate('/auth/signin')
       this.curr_page = '/auth/signin'
-    } else {
-      this.curr_page = this.router.url
     }
     this.isLoading = false;
   }

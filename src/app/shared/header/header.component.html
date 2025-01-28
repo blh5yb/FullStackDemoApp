@@ -25,7 +25,10 @@
         </ion-label>
       </ion-col>
       <ion-col *ngIf="!isAuthenticated" style="padding-right: 15px;" size-md="4" size-sm="4"></ion-col>
-      <ion-col *ngIf="!is_small || isAuthenticated" style="padding-right: 15px;" class="ion-text-center"  size-md="4" size-sm="4">
+      <ion-col *ngIf="isAuthenticated" class="ion-text-center" style="padding-right: 15px;"  size-md="4" size-sm="4">
+        <img src="assets/icon/thecoolnerd_green_nobg.png" style="height: 30px;">
+      </ion-col>
+      <ion-col *ngIf="!is_small && !isAuthenticated" class="ion-text-right" style="padding-right: 15px;"  size-md="4" size-sm="4">
         <img src="assets/icon/thecoolnerd_green_nobg.png" style="height: 30px;">
       </ion-col>
       <ion-col *ngIf="is_small && !isAuthenticated" style="padding-right: 15px;" class="ion-text-right"  size-md="4" size-sm="4">

@@ -79,7 +79,7 @@ export class ContactPage implements OnInit {
     }
     const res = await this.backendService.sendEmail(data)
     if (res){
-      this.widgetService.presentToast("Successfully send mail. I will be in contact with you at my earliest convenience")
+      this.widgetService.presentToast("Successfully sent email. I will be in contact with you at my earliest convenience")
       this.initContactForm();
       this.helperService.navigate('/home')
     } else {
