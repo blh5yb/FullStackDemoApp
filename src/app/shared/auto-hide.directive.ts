@@ -29,6 +29,7 @@ export class AutoHideDirective {
   }
 
   async onContentScroll(e: any){
+    
     const scrollElement = await e.target.getScrollElement();
     if(scrollElement.scrollTop >= (scrollElement.clientHeight / 2)) {
       console.log(scrollElement.scrollTop, (scrollElement.clientHeight / 2))
