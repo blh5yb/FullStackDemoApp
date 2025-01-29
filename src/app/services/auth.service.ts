@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, Injectable } from '@angular/core';
 import { WidgetService } from './widget.service';
 import { BehaviorSubject, catchError, tap, throwError} from 'rxjs';
 import { User } from '../models/user.model';
@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { HelperService } from './helper.service';
 import { AuthResponseData } from '../models/auth.model';
 import { CookieService } from 'ngx-cookie-service';
+import { BackendService } from './backend.service';
 
 
 
@@ -23,7 +24,9 @@ export class AuthService {
     private widgetService: WidgetService,
     private http: HttpClient,
     private helperService: HelperService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private ref: ApplicationRef,
+    private backendService: BackendService
   ) { }
 
   saveCredentials(authInfo: any){
@@ -90,6 +93,7 @@ export class AuthService {
       .subscribe(async (res: any) => {
         await this.handleAuthentication(res.data)
       }, error => {
+        console.error(error)
         this.handleError(error)
       })
 
@@ -236,7 +240,9 @@ export class AuthService {
         errorMessage = 'Authentication Error. Log back in and try again'
     }
     await this.widgetService.dismissLoading();
-    return this.widgetService.presentAlert('An Error Occurred', errorMessage)
+    await  this.widgetService.presentAlert('An Error Occurred', errorMessage)
+    this.backendService.sendError(errorRes.error, errorMessage)
+    return this.ref.tick();
     //return throwError(errorMessage);
   }
 }
