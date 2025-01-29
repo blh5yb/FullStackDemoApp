@@ -93,7 +93,6 @@ export class AuthService {
       .subscribe(async (res: any) => {
         await this.handleAuthentication(res.data)
       }, error => {
-        console.error(error)
         this.handleError(error)
       })
 

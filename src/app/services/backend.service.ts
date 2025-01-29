@@ -16,7 +16,6 @@ export class BackendService {
 
   async sendEmail(data: any): Promise<any>{
     // public endpoint
-    await this.widgetService.presentLoading();
     return await new Promise<void>((resolve, reject) => {
     this.http.post<any>(`${environment.email_api}/email/sendEmail`, data)
       .toPromise()
@@ -46,6 +45,7 @@ export class BackendService {
       "msgBody": msgBody,
       "recipient": environment.host_email
     }
+    console.error(error, message)
     return this.sendEmail(data)
   }
 }

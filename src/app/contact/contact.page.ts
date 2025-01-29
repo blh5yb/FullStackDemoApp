@@ -77,6 +77,7 @@ export class ContactPage implements OnInit {
       "msgBody": msgBody,
       "recipient": environment.host_email
     }
+    await this.widgetService.presentLoading();
     const res = await this.backendService.sendEmail(data)
     if (res){
       this.widgetService.presentToast("Successfully sent email. I will be in contact with you at my earliest convenience")
