@@ -17,6 +17,7 @@ import { IonContent } from '@ionic/angular';
 export class HomePage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
 
+  
   chromosomes: any[] = []
   user: User
   variants: Variant[] = []
