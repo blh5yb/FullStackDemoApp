@@ -35,7 +35,7 @@
     </ion-col>
   </ion-row>
 </div>
-<ion-row style="margin-top: 20px;" class="ion-align-items-center ion-justify-content-center">
+<ion-row *ngIf="chromosomes.length" style="margin-top: 20px;" class="ion-align-items-center ion-justify-content-center">
   <ion-col *ngFor="let variant of filteredVariants" class="ion-text-center" size-xs="12" size-sm="9" size-md="6">
     <app-variant-item [variant]="variant" [user]="user" [chromosomes]="chromosomes"
     ></app-variant-item>

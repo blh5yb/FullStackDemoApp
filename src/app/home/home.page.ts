@@ -33,6 +33,7 @@ export class HomePage implements OnInit {
     this.user = this.authService.user.value
     this.isLoading = true;
     this.variants = this.variantService.getVariants();
+    this.chromosomes = this.variantService.setFilters();
     if (!this.variants.length){
       this.setData();
     } else {
@@ -45,7 +46,6 @@ export class HomePage implements OnInit {
     const variantsEndpoint = `${environment.variants_api}/variants`
     await this.dataStorage.fetchCollection(variantsEndpoint, 'variants')
     this.variants = this.variantService.getVariants();
-    this.chromosomes = this.variantService.setFilters();
     this.isLoading = false;
     await this.widgetService.dismissLoading();
   }

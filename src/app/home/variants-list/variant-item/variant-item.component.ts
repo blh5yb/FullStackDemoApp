@@ -18,7 +18,7 @@ export class VariantItemComponent  implements OnInit {
   @Input() user: User;
   @Input() variant: Variant;
   
-  chromosomes: any[] = []
+  @Input() chromosomes: any[] = []
 
   constructor(
     private modalCtrl: ModalController,
@@ -26,7 +26,8 @@ export class VariantItemComponent  implements OnInit {
     private dataStorage: DataStorageService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   async viewVariant(){
     const modal = await this.modalCtrl.create({

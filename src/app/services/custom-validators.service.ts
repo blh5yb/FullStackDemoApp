@@ -1,8 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractControl, AsyncValidator, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { catchError, debounceTime, map, Observable, of, switchMap, throwError, timer } from 'rxjs';
-import { AuthResponseData } from '../models/auth.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

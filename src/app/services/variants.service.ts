@@ -55,7 +55,7 @@ export class VariantsService {
         title: `chr${i}`,
       })
     }
-    chromosomes.concat([{
+    chromosomes = chromosomes.concat([{
       selected: true,
       title: 'chrX',
     }, {
