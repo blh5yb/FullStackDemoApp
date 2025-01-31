@@ -51,6 +51,8 @@ def create_app(config_filename):
     api.add_resource(VariantApi, '/flask-api/variants/<id>')
     return app
 
+
+# reverse these comments for lambda deployment
 #app = create_app('config.BaseConfig')
 # logger.info(f"App is running on port {port}")
 if __name__ == '__main__':
