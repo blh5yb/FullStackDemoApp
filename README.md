@@ -43,7 +43,6 @@ use my demo user credentials below.
  - Auth verify email
  - Auth forgot password/ reset
  - Password requirements
- - cache variants result to reduce api calls
  - MongoDb document locking
  - About page?
  - Variant filters reset
