@@ -25,7 +25,8 @@ class VariantModel(BaseModel):
     alt: str
     variant_type: str
     quality: Optional[float]
-    created_at: Optional[datetime] = datetime.utcnow() # Field(default_factory=datetime.utcnow)
+    created_at: Optional[datetime] = datetime.utcnow() #
+    updated_at: Optional[datetime] = datetime.utcnow() # Field(default_factory=datetime.utcnow)
     #gene: GeneModel
 
     # custom validators

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HelperService } from './helper.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VariantsService } from './variants.service';
 import { WidgetService } from './widget.service';
 import { catchError, tap } from 'rxjs';
+import { CacheService } from './cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,32 @@ import { catchError, tap } from 'rxjs';
 export class DataStorageService {
 
   constructor(
-    private helperService: HelperService,
+    private cacheService: CacheService,
     private http: HttpClient,
     private variantService: VariantsService,
     private widgetService: WidgetService
   ) { }
+
+  async fetchVariants(endpoint, cltn){
+    return this.cacheService.cacheObservable(endpoint, this.http.get<any>(endpoint))
+    .subscribe(res => {
+      // Use your data here
+      console.log(res.data);
+      return this.variantService.setVariants(res.data)
+    }, catchError(async (error) => {
+      this.widgetService.presentAlert(`Error querying data in the ${cltn} database`)
+      return error.message
+    }));
+    //return this.http.get<any>(endpoint).pipe(
+    //  tap(res => {
+    //    return this.variantService.setVariants(res.data)
+    //  }),
+    //  catchError(async (error) => {
+    //    this.widgetService.presentAlert(`Error querying data in the ${cltn} database`)
+    //    return error.message
+    //  })
+    //).subscribe()
+  }
 
   async fetchCollection(endpoint, cltn){
     return this.http.get<any>(endpoint).pipe(

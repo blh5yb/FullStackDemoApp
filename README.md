@@ -46,3 +46,4 @@ use my demo user credentials below.
  - cache variants result to reduce api calls
  - MongoDb document locking
  - About page?
+ - Variant filters reset

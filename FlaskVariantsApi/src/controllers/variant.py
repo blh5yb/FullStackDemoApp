@@ -2,11 +2,9 @@ from flask_restful import Resource
 from flask import request, make_response, jsonify
 from pymongo.collection import Collection
 from pydantic import ValidationError
-from services.variant_service import *
-from db import db
-from middleware.variants_middleware import limit_variants
-
-from middleware.auth_middleware import require_authentication
+from src.services.variant_service import *
+from src.db import db
+from src.middleware.variants_middleware import limit_variants
 
 
 class VariantsApi(Resource):
@@ -15,9 +13,11 @@ class VariantsApi(Resource):
         self.variant_cltn: Collection = db.mongo.db['variants']
 
     # get all
+    @require_authentication
     def get(self):
         """Get all variants"""
         try:
+            print('get variants')
             return get_variants(self.variant_cltn, 'variants')
         except ValidationError as err:
             print('error', err)

@@ -23,6 +23,18 @@ export class VariantsService {
     private helperService: HelperService
   ) { }
 
+
+  updateVariant(index: number, update: any){
+    this.variants[index] = update
+    this.variantsChanged.next(this.variants)
+  }
+
+  deleteVariant(index: number){
+    this.variants.splice(index, 1)
+    this.variantsChanged.next(this.variants)
+    console.log(this.variants.length)
+  }
+
   setVariants(data: any){
     let variants = []
     for (let variant of data){
@@ -55,7 +67,7 @@ export class VariantsService {
         title: `chr${i}`,
       })
     }
-    chromosomes.concat([{
+    chromosomes = chromosomes.concat([{
       selected: true,
       title: 'chrX',
     }, {

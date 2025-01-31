@@ -30,13 +30,5 @@ COPY ./requirements.txt ${LAMBDA_TASK_ROOT}
 RUN pip install -r ${LAMBDA_TASK_ROOT}/requirements.txt
 ##################################################
 
-# Use a slim version of the base Python image to reduce the final image size
-# FROM python:3.12-slim
-
-# Copy in the built dependencies
-# COPY --from=build-image /function /function
-# ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
-
-
 # Pass the name of the function handler as an argument to the runtime
 CMD [ "app.handler" ]

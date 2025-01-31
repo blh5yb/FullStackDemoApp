@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { Variant } from '../models/variants.model';
 import { VariantsService } from '../services/variants.service';
 import { IonContent } from '@ionic/angular';
+import { CacheService } from '../services/cache.service';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { IonContent } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
+
 
   chromosomes: any[] = []
   user: User
@@ -27,25 +29,27 @@ export class HomePage implements OnInit {
     private widgetService: WidgetService,
     private dataStorage: DataStorageService,
     private variantService: VariantsService,
+    private cacheService: CacheService,
   ) {}
 
   ngOnInit(): void {
     this.user = this.authService.user.value
     this.isLoading = true;
     this.variants = this.variantService.getVariants();
-    if (!this.variants.length){
-      this.setData();
-    } else {
-      this.isLoading = false;
-    }
+    this.chromosomes = this.variantService.setFilters();
+    this.setData();
+    //if (!this.variants.length){
+    //  this.setData();
+    //} else {
+    //  this.isLoading = false;
+    //}
   }
 
   async setData(){
     await this.widgetService.presentLoading();
     const variantsEndpoint = `${environment.variants_api}/variants`
-    await this.dataStorage.fetchCollection(variantsEndpoint, 'variants')
+    await this.dataStorage.fetchVariants(variantsEndpoint, 'variants')
     this.variants = this.variantService.getVariants();
-    this.chromosomes = this.variantService.setFilters();
     this.isLoading = false;
     await this.widgetService.dismissLoading();
   }
@@ -55,7 +59,7 @@ export class HomePage implements OnInit {
   }
 
   scrollToTop(){
-    this.content.scrollToTop();
+    this.content.scrollToTop(250);
   }
 
 }

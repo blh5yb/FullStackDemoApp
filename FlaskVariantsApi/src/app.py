@@ -1,17 +1,18 @@
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from serverless_wsgi import handle_request
 
+# export path
+import os, sys
+dir_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(dir_path)
+print(dir_path)
+print('sys', sys.path)
 from controllers.variant import *
 from helpers.format_error_msg import format_error_message
 from err_msg import UNAUTHORIZED, SERVER_ERROR, UNKNOWN
-import os, sys
 from db.db import mongo
 
-# export path
-dir_path = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(dir_path)
 
 from helpers.helper_functions import logger
 
@@ -50,10 +51,13 @@ def create_app(config_filename):
     api.add_resource(VariantApi, '/flask-api/variants/<id>')
     return app
 
-app = create_app('config.BaseConfig')
-#if __name__ == '__main__':
-#    isDEV = True if os.getenv('isDEV') == 'true' else False
-#    port = os.getenv('NODE_LOCAL_PORT')
-#    my_app = create_app('config.BaseConfig')
-#    my_app.run(host='0.0.0.0', port=port, debug=isDEV, use_reloader=True)
-#    logger.info(f"App is running on port {port}")
+
+# reverse these comments for lambda deployment
+#app = create_app('config.BaseConfig')
+# logger.info(f"App is running on port {port}")
+if __name__ == '__main__':
+    isDEV = True if os.getenv('isDEV') == 'true' else False
+    port = os.getenv('NODE_LOCAL_PORT')
+    my_app = create_app('config.BaseConfig')
+    my_app.run(host='0.0.0.0', port=port, debug=isDEV, use_reloader=True)
+    logger.info(f"App is running on port {port}")

@@ -16,7 +16,6 @@ export class BackendService {
 
   async sendEmail(data: any): Promise<any>{
     // public endpoint
-    await this.widgetService.presentLoading();
     return await new Promise<void>((resolve, reject) => {
     this.http.post<any>(`${environment.email_api}/email/sendEmail`, data)
       .toPromise()
@@ -31,4 +30,23 @@ export class BackendService {
       })
     })
   }
+  
+  async sendError(error: any, message: any){
+    const my_date = new Date()
+    const cst = my_date.setHours(my_date.getHours() - 7)
+    let msgBody = `<p>
+      An error occurred<br>
+      dateTime: ${new Date(cst)}<br>
+      ${message}<br>
+      ${JSON.stringify(error)}
+    </p>`
+    const data = {
+      "subject": "Demo site error",
+      "msgBody": msgBody,
+      "recipient": environment.host_email
+    }
+    console.error(error, message)
+    return this.sendEmail(data)
+  }
 }
+

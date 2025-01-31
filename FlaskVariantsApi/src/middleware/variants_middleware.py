@@ -1,7 +1,7 @@
 import os
 from pymongo.collection import Collection
-from db import db
-from helpers.helper_functions import logger
+from src.db import db
+from src.helpers.helper_functions import logger
 from flask import request
 
 

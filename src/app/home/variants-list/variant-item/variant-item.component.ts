@@ -17,16 +17,19 @@ import { environment } from 'src/environments/environment';
 export class VariantItemComponent  implements OnInit {
   @Input() user: User;
   @Input() variant: Variant;
+  @Input() index: number;
   
-  chromosomes: any[] = []
+  @Input() chromosomes: any[] = []
 
   constructor(
     private modalCtrl: ModalController,
     private widgetService: WidgetService,
-    private dataStorage: DataStorageService
+    private variantService: VariantsService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.variant)
+  }
 
   async viewVariant(){
     const modal = await this.modalCtrl.create({
@@ -50,8 +53,14 @@ export class VariantItemComponent  implements OnInit {
       if (res && res.data){
         // add to db
         await this.widgetService.presentLoading();
-        const variantsEndpoint = `${environment.variants_api}/variants`
-        await this.dataStorage.fetchCollection(variantsEndpoint, 'variants')
+        if (res.data.variant){
+          this.variantService.updateVariant(this.index, res.data.variant)
+        } else if (res.data.delete){
+          this.variantService.deleteVariant(this.index)
+        }
+        
+        //const variantsEndpoint = `${environment.variants_api}/variants`
+        //await this.dataStorage.fetchCollection(variantsEndpoint, 'variants')
         return await this.widgetService.dismissLoading();
       }
     })
