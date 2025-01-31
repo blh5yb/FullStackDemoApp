@@ -13,7 +13,7 @@ class VariantsApi(Resource):
         self.variant_cltn: Collection = db.mongo.db['variants']
 
     # get all
-    # @require_authentication
+    @require_authentication
     def get(self):
         """Get all variants"""
         try:
@@ -25,7 +25,7 @@ class VariantsApi(Resource):
             return make_response(response.get_json(), response.status_code)
 
     # create new variant
-    #@require_authentication
+    @require_authentication
     @limit_variants # middleware to limit variants that can be created
     def post(self):
         """Save a new variant to db"""
@@ -51,7 +51,7 @@ class VariantApi(Resource):
             return make_response(response.get_json(), response.status_code)
         return find_variant(self.variant_cltn, 'variants', id)
 
-    #@require_authentication
+    @require_authentication
     def put(self, id):
         """Update a variant"""
         print('update variant')
@@ -63,7 +63,7 @@ class VariantApi(Resource):
 
         return update_variant(self.variant_cltn, 'variants', id, body)
 
-    #@require_authentication
+    @require_authentication
     def delete(self, id):
         """Update a variant"""
         if not id:
