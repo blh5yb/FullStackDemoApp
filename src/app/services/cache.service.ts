@@ -43,10 +43,8 @@ export class CacheService {
   cacheObservable(key: string, fallback: Observable<any>, ttl?: number): Observable<any> {
     const cached = this.get(key);
     if (cached) {
-      console.log(cached)
       return cached;
     } else {
-      console.log('get variants')
       return fallback.pipe(
         tap(value => {
           this.set(key, value, ttl);
