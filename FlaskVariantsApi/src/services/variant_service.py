@@ -1,22 +1,17 @@
-import os
+from datetime import datetime
 
-from models.variant_model import VariantModel
-from flask import make_response, jsonify
-from helpers.format_error_msg import format_error_message
-from err_msg import *
-from helpers.mongo_crud import *
-from helpers.helper_functions import parse_db_res
+from src.models.variant_model import VariantModel
+from src.helpers.format_error_msg import format_error_message
+from src.err_msg import *
+from src.helpers.helper_functions import parse_db_res
 from bson.objectid import ObjectId
-import json
 
 def get_variants(cursor, cltn):
     try:
-        #variants = VariantModel.objects().to_json()
-        variants = fetch_all(cursor, cltn)
-        print(variants)
+        variants = list(cursor.find())
         return ({
             "msg": f'Fetched {len(variants)} variants from db',
-            "data": parse_db_res(variants),
+            "data": [parse_db_res(variant) for variant in variants],
         }, 200)
     except Exception as err:
         print('db search err', err)
@@ -25,14 +20,22 @@ def get_variants(cursor, cltn):
 
 def save_variant(cursor, cltn, variant):
     try:
-      result_id = insert_one(variant, cursor, cltn)
-      res = {
-          "msg": f"Inserted variant",
-          "data": {"_id": f"{result_id}"},
-      }
-      print('res', res)
-      return res, 201
-      #return make_response(f'Inserted variant with _id {variant}', 201)
+        variant['created_at'] = datetime.utcnow()
+        variant = VariantModel(**variant)
+        print(variant)
+        found_doc = cursor.find_one(variant.dict(exclude={"created_at", "updated_at"}))
+        if found_doc is None:
+            result_id = str(cursor.insert_one(variant.dict()).inserted_id)
+            print('res', result_id)
+        else:
+            result_id = str(parse_db_res(found_doc)['_id'])
+        #result_id = insert_one(variant, cursor, cltn)
+        res = {
+            "msg": f"Inserted variant",
+            "data": {"_id": f"{result_id}"}
+        }
+        return res, 201
+        #return make_response(f'Inserted variant with _id {variant}', 201)
     except (ValueError, Exception) as err:
         if ValueError:
             return format_error_message(INVALID_VARIANT_ERROR, err, cltn)
@@ -40,19 +43,22 @@ def save_variant(cursor, cltn, variant):
 
 def find_variant(cursor, cltn, variant_id):
     try:
-        result = find_one(ObjectId(variant_id), cursor, cltn)
+        result = cursor.find_one({"_id": variant_id})
+        print('res', result.dict())
         if not result:
             return format_error_message(DB_SEARCH_ERROR, "varaint not found", cltn)
         return ({
             "msg": f"Fetched Variant",
-            "data": parse_db_res(result),
+            "data": result.dict(),
         }, 201)
     except Exception as err:
         return format_error_message(DB_SEARCH_ERROR, err, cltn)
 
-def update_variant(cursor, cltn, variant_id, variant):
+def update_variant(cursor, cltn, variant_id, update):
     try:
-        update_one({"_id": ObjectId(variant_id)}, variant, cursor, cltn)
+        variant = VariantModel(**update)
+        cursor.update_one({"_id": ObjectId(variant_id)}, {"$set": variant.dict(exclude={"created_at"})})
+        # cursor.update_one({"_id": ObjectId(variant_id)}, {"$set": variant.dict(exclude={"_id", "created_at"})})
         return ({
             "msg": f"Updated Variant",
             "data": {"_id": variant_id},
@@ -63,7 +69,7 @@ def update_variant(cursor, cltn, variant_id, variant):
 
 def delete_variant(cursor, cltn, variant_id):
     try:
-        result = delete_one({"_id": ObjectId(variant_id)}, cursor, cltn)
+        result = cursor.delete_one({"_id": ObjectId(variant_id)})
         print(result)
         return ({
             "msg": f"Deleted {result.deleted_count} Variants",

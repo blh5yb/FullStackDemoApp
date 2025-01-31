@@ -13,21 +13,21 @@ EXPOSE 3000
 WORKDIR /
 
 ########## local development ####################
-# RUN mkdir src
-# COPY ./src /src
-# RUN chmod 755 /src
-# COPY ./requirements.txt .
-# RUN pip install -r /requirements.txt
-# ENTRYPOINT [ "python3", "/src/app.py", "runserver" ]
+RUN mkdir src
+COPY ./src /src
+RUN chmod 755 /src
+COPY ./requirements.txt .
+RUN pip install -r /requirements.txt
+ENTRYPOINT [ "python3", "/src/app.py", "runserver" ]
 ##################################################
 
 
 ################ Lambda Deployment ################
-RUN mkdir -p function
-COPY ./src ${LAMBDA_TASK_ROOT}
-RUN chmod 755 /function
-COPY ./requirements.txt ${LAMBDA_TASK_ROOT}
-RUN pip install -r ${LAMBDA_TASK_ROOT}/requirements.txt
+# RUN mkdir -p function
+# COPY ./src ${LAMBDA_TASK_ROOT}
+# RUN chmod 755 /function
+# COPY ./requirements.txt ${LAMBDA_TASK_ROOT}
+# RUN pip install -r ${LAMBDA_TASK_ROOT}/requirements.txt
 ##################################################
 
 # Use a slim version of the base Python image to reduce the final image size

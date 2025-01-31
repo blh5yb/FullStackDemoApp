@@ -1,10 +1,14 @@
+import os
+from dotenv import load_dotenv
 import pytest
 from src.app import create_app
 from unittest.mock import patch
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def app():
+    load_dotenv()
+
     test_app = create_app('config.BaseConfig')
     test_app.config.update({
         'TESTING': True,
@@ -23,7 +27,7 @@ def runner(app):
     return app.test_cli_runner()
 
 
-@pytest.fixture()
+@pytest.fixture(scope='function')
 def mongo_mock(app):
     """create mongo db collection find mock"""
     with patch('db.db.mongo.db') as mock_mongo:

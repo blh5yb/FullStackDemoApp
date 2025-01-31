@@ -2,11 +2,9 @@ from flask_restful import Resource
 from flask import request, make_response, jsonify
 from pymongo.collection import Collection
 from pydantic import ValidationError
-from services.variant_service import *
-from db import db
-from middleware.variants_middleware import limit_variants
-
-from middleware.auth_middleware import require_authentication
+from src.services.variant_service import *
+from src.db import db
+from src.middleware.variants_middleware import limit_variants
 
 
 class VariantsApi(Resource):
@@ -15,9 +13,11 @@ class VariantsApi(Resource):
         self.variant_cltn: Collection = db.mongo.db['variants']
 
     # get all
+    # @require_authentication
     def get(self):
         """Get all variants"""
         try:
+            print('get variants')
             return get_variants(self.variant_cltn, 'variants')
         except ValidationError as err:
             print('error', err)
@@ -25,7 +25,7 @@ class VariantsApi(Resource):
             return make_response(response.get_json(), response.status_code)
 
     # create new variant
-    @require_authentication
+    #@require_authentication
     @limit_variants # middleware to limit variants that can be created
     def post(self):
         """Save a new variant to db"""
@@ -51,7 +51,7 @@ class VariantApi(Resource):
             return make_response(response.get_json(), response.status_code)
         return find_variant(self.variant_cltn, 'variants', id)
 
-    @require_authentication
+    #@require_authentication
     def put(self, id):
         """Update a variant"""
         print('update variant')
@@ -63,7 +63,7 @@ class VariantApi(Resource):
 
         return update_variant(self.variant_cltn, 'variants', id, body)
 
-    @require_authentication
+    #@require_authentication
     def delete(self, id):
         """Update a variant"""
         if not id:

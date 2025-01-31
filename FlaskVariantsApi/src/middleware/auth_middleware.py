@@ -1,5 +1,5 @@
 import jwt
-from helpers.helper_functions import logger
+from src.helpers.helper_functions import logger
 from flask import request
 import os
 

@@ -8,6 +8,7 @@ import { HelperService } from './helper.service';
 import { AuthResponseData } from '../models/auth.model';
 import { CookieService } from 'ngx-cookie-service';
 import { BackendService } from './backend.service';
+import { CacheService } from './cache.service';
 
 
 
@@ -26,7 +27,8 @@ export class AuthService {
     private helperService: HelperService,
     private cookieService: CookieService,
     private ref: ApplicationRef,
-    private backendService: BackendService
+    private backendService: BackendService,
+    private cacheService: CacheService
   ) { }
 
   saveCredentials(authInfo: any){
@@ -176,6 +178,7 @@ export class AuthService {
         this.helperService.navigate('/auth')
         localStorage.removeItem('Demo-userData')
         this.cookieService.deleteAll();
+        this.cacheService.clearCache();
         if (this.tokenExpirationTimer){
           clearTimeout(this.tokenExpirationTimer)
         }

@@ -25,7 +25,7 @@ export class EditVariantComponent  implements OnInit {
   }
   varId: string = null
   mode = 'edit'
-  updated = (this.mode === 'create')
+  updated = false
   user: User
   chromosomes: any[] = []
   variant_types: any[] = []
@@ -44,12 +44,14 @@ export class EditVariantComponent  implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.updated = (this.mode === 'create')
     this.initVariantForm()
     this.editVariantForm.valueChanges.subscribe(() => {
       if (!this.updated){
         this.updated = true
       }
     })
+    console.log(this.myVariant)
     this.isLoading = false;
   }
 
@@ -78,6 +80,9 @@ export class EditVariantComponent  implements OnInit {
   async save(){
     this.showSpinner = true;
     const variant = {
+      _id: this.varId,
+      created_at: this.myVariant.created_at ? this.myVariant.created_at : null,
+      updated_at: this.myVariant.updated_at ? this.myVariant.updated_at : null,
       chr: this.editVariantForm.controls.chr.value,
       pos: this.editVariantForm.controls.pos.value,
       ref: this.editVariantForm.controls.ref.value,
@@ -101,7 +106,7 @@ export class EditVariantComponent  implements OnInit {
         }
       }
       this.showSpinner = false
-      return this.modalCtrl.dismiss(variant)
+      return this.modalCtrl.dismiss({variant: variant})
     } catch (error){
       this.showSpinner = false
       return this.back()
@@ -117,7 +122,7 @@ export class EditVariantComponent  implements OnInit {
       const variantsEndpoint = `${environment.variants_api}/variants/${this.varId}`
       await this.dataStorage.deleteDoc(variantsEndpoint, 'variants', this.user.token)
       await this.widgetService.dismissLoading();
-      this.modalCtrl.dismiss(this.myVariant)
+      this.modalCtrl.dismiss({delete: true})
     }
   }
 
