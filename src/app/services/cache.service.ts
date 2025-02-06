@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { WidgetService } from './widget.service';
 
 interface CacheContent {
   expiry: number;
@@ -13,12 +14,13 @@ interface CacheContent {
 export class CacheService {
   private cache = new Map<string, CacheContent>();
 
-  constructor() { }
+  constructor(
+    private widgetService: WidgetService,
+  ) { }
 
   // Get data from cache
   get(key: string): Observable<any> | undefined {
     const data = this.cache.get(key);
-    console.log(data)
     if (!data) {
       return undefined;
     }

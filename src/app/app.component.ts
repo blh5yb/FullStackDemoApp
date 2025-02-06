@@ -52,7 +52,6 @@ export class AppComponent implements OnInit, OnDestroy {
   async initializeApp(){
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates.subscribe(async(event) => {
-        console.log('update', event)
         if (event.type === "VERSION_READY") {
           const header = "New version available. Load New Version?"
           let action: any = await this.widgetService.confirmAction(header, 'Update', 'refresh', null);

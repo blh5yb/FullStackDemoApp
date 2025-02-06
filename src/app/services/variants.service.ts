@@ -32,7 +32,6 @@ export class VariantsService {
   deleteVariant(index: number){
     this.variants.splice(index, 1)
     this.variantsChanged.next(this.variants)
-    console.log(this.variants.length)
   }
 
   setVariants(data: any){

@@ -63,22 +63,20 @@ export class VariantsListComponent  implements OnInit, OnDestroy{
       this.setData(filters)
       //this.filterVariants(this.filters)
     })
-    console.log(this.filteredVariants)
     if (!this.filteredVariants.length){
       const filters = this.variantService.getFilters()
       this.setData(filters)
     }
     
     this.filtersSub = this.variantService.filtersChanged.subscribe((filters: any) => {
-      console.log(filters)
+      
       this.setData(filters)
     })
   }
 
   async setData(filters){
     if (this.variants.length){
-      await this.widgetService.presentLoading()
-      console.log('set data')
+      //await this.widgetService.presentLoading()
       this.filters = this.helperService.deepCopy(filters)
       await this.filterVariants(filters)
     }
@@ -103,7 +101,6 @@ export class VariantsListComponent  implements OnInit, OnDestroy{
     }).filter((variant: Variant) => {
       return chromosomes.includes(variant.chr) && vtypes.includes(variant.variant_type)
     })
-    console.log(variants)
     this.filteredVariants = variants
     await this.widgetService.dismissLoading();
   }
