@@ -51,7 +51,6 @@ export class EditVariantComponent  implements OnInit {
         this.updated = true
       }
     })
-    console.log(this.myVariant)
     this.isLoading = false;
   }
 

@@ -21,7 +21,6 @@ export class DataStorageService {
     return this.cacheService.cacheObservable(endpoint, this.http.get<any>(endpoint))
     .subscribe(res => {
       // Use your data here
-      console.log(res.data);
       return this.variantService.setVariants(res.data)
     }, catchError(async (error) => {
       this.widgetService.presentAlert(`Error querying data in the ${cltn} database`)

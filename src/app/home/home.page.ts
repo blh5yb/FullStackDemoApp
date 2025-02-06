@@ -29,13 +29,12 @@ export class HomePage implements OnInit {
     private widgetService: WidgetService,
     private dataStorage: DataStorageService,
     private variantService: VariantsService,
-    private cacheService: CacheService,
   ) {}
 
   ngOnInit(): void {
     this.user = this.authService.user.value
     this.isLoading = true;
-    this.variants = this.variantService.getVariants();
+    // this.variants = this.variantService.getVariants();
     this.chromosomes = this.variantService.setFilters();
     this.setData();
     //if (!this.variants.length){
@@ -46,7 +45,7 @@ export class HomePage implements OnInit {
   }
 
   async setData(){
-    await this.widgetService.presentLoading();
+    await this.widgetService.presentLoading()
     const variantsEndpoint = `${environment.variants_api}/variants`
     await this.dataStorage.fetchVariants(variantsEndpoint, 'variants')
     this.variants = this.variantService.getVariants();

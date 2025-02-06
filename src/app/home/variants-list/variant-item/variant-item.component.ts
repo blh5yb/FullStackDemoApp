@@ -28,7 +28,6 @@ export class VariantItemComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.variant)
   }
 
   async viewVariant(){

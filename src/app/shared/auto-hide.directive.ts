@@ -32,7 +32,6 @@ export class AutoHideDirective {
     
     const scrollElement = await e.target.getScrollElement();
     if(scrollElement.scrollTop >= (scrollElement.clientHeight / 2)) {
-      console.log(scrollElement.scrollTop, (scrollElement.clientHeight / 2))
       // this ensures that the event only triggers once
       // do your analytics tracking here
       //this.fabToHide.style.opacity = '1'
