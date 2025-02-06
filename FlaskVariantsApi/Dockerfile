@@ -31,4 +31,4 @@ RUN pip install -r ${LAMBDA_TASK_ROOT}/requirements.txt
 ##################################################
 
 # Pass the name of the function handler as an argument to the runtime
-CMD [ "app.handler" ]
+CMD [ "lambda_function.handler" ]

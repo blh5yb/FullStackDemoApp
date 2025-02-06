@@ -4,10 +4,9 @@ from flask_cors import CORS
 
 # export path
 import os, sys
-dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
 sys.path.append(dir_path)
-print(dir_path)
-print('sys', sys.path)
+
 from controllers.variant import *
 from helpers.format_error_msg import format_error_message
 from err_msg import UNAUTHORIZED, SERVER_ERROR, UNKNOWN
@@ -15,7 +14,7 @@ from db.db import mongo
 
 
 from helpers.helper_functions import logger
-
+port = os.getenv('NODE_LOCAL_PORT')
 app = Flask(__name__)
 #app.config.from_object('config.BaseConfig')
 #mongo.init_app(app)
@@ -26,7 +25,7 @@ app = Flask(__name__)
 
 @app.errorhandler(SystemError) # catched the auth middle ware error
 def handle_auth_error(e):
-      logger.error('User unauthorized', e)
+      logger.error(f'User unauthorized: {e}')
       return format_error_message(UNAUTHORIZED, 'User is not authorized to make this request', 'variants')
 
 @app.errorhandler(EnvironmentError)
@@ -53,11 +52,11 @@ def create_app(config_filename):
 
 
 # reverse these comments for lambda deployment
-#app = create_app('config.BaseConfig')
-# logger.info(f"App is running on port {port}")
-if __name__ == '__main__':
-    isDEV = True if os.getenv('isDEV') == 'true' else False
-    port = os.getenv('NODE_LOCAL_PORT')
-    my_app = create_app('config.BaseConfig')
-    my_app.run(host='0.0.0.0', port=port, debug=isDEV, use_reloader=True)
-    logger.info(f"App is running on port {port}")
+app = create_app('config.BaseConfig')
+logger.info(f"App is running on port {port}")
+# if __name__ == '__main__':
+#     isDEV = True if os.getenv('isDEV') == 'true' else False
+#     
+#     my_app = create_app('config.BaseConfig')
+#     my_app.run(host='0.0.0.0', port=port, debug=isDEV, use_reloader=True)
+#     logger.info(f"App is running on port {port}")
