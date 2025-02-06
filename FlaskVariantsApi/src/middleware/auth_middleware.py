@@ -1,5 +1,5 @@
 import jwt
-from src.helpers.helper_functions import logger
+from helpers.helper_functions import logger
 from flask import request
 import os
 
@@ -14,15 +14,16 @@ class AuthMiddleware:
       logger.error(e)
   def authenticate(self):
     auth_token = request.headers.get('Authorization')
-    print('auth token', auth_token, auth_token.split(' ')[1])
+    if not auth_token:
+        raise SystemError('User is not authorized')
+
     valid = self.is_valid_token(auth_token.split(' ')[1])
     print('valid', valid)
-    if not auth_token or not self.is_valid_token(auth_token.split(' ')[1]):
+    if not not self.is_valid_token(auth_token.split(' ')[1]):
         print('unauthorized')
         raise SystemError('User is not authorized')
 
 def require_authentication(func):
-  print('require auth')
   def wrapper(*args, **kwargs):
     AuthMiddleware().authenticate()
     return func(*args, **kwargs)
