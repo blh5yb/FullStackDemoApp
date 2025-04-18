@@ -33,27 +33,11 @@ http://localhost:3000/api-docs
  - req body: {"name": "name", "email": "example@email.com", "password": "supersecretpassword"}
  - returns: accessToken, refreshtoken, User
 ### POST /login
- - req body: {"name": "name", "email": "example@email.com", "password": "supersecretpassword"}
+ - req body: {"email": "example@email.com", "password": "supersecretpassword"}
  - returns: accessToken, refreshtoken, User
 ### POST /refresh
  - req cookies: refreshToken
  - returns: accessToken
-
-
-## Product Endpoints
-### GET /products
-### GET /products/{id}
-### PUT /products/ (Protected)
- - req headers: authorization
- - req cookies refreshToken 
- - req body: {"name": "name", "price": 10, "description": "test description"}
-### Patch /products/{id} (Protected)
- - req headers: authorization
- - req cookies refreshToken 
- - req body: {"name": "name", "price": 10, "description": "test description"}
-### DELETE /products/{id} (Protected)
- - req headers: authorization
- - req cookies refreshToken 
 
 
 ## In Progress:
